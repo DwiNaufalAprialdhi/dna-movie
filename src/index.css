@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-[#0D0D0D] text-[#FCFCFC] font-roboto;
+  }
+  section {
+    @apply py-10 lg:px-[105px] md:px-12 px-4 mx-auto w-full;
+  }
+}
+
+@layer components {
+  .movies-header {
+    @apply z-[999] fixed flex md:flex-row flex-col bg-transparent gap-5 w-full lg:py-10 md:py-10 py-5 lg:px-[105px] md:px-12 justify-between items-center transition-all duration-300 ease-in-out;
+  }
+  .movies-header-logo {
+    @apply flex items-center gap-2;
+  }
+  .movies-container {
+    @apply flex flex-wrap md:justify-between justify-center gap-5;
+  }
+  .movies-search {
+    @apply py-3 px-6 outline-none bg-[#0D0D0D] rounded-full text-white font-bold placeholder:opacity-50 md:max-w-sm max-w-none placeholder:text-center;
+  }
+  .movies-card {
+    @apply rounded-lg overflow-hidden lg:w-1/5 md:w-1/5 w-1/3 relative hover:scale-105 duration-300 z-10 text-white;
+  }
+  .movies-img {
+    @apply w-full h-auto brightness-50;
+  }
+  .movies-info {
+    @apply p-4 flex flex-col gap-2 absolute bottom-1 left-1 z-10;
+  }
+  .movies-title {
+    @apply font-bold text-base;
+  }
+  .movies-date {
+    @apply font-bold text-sm;
+  }
+  .movies-rating {
+    @apply font-bold text-xs;
+  }
+
+  .movie-details {
+    @apply w-full flex flex-col bg-[#0D0D0D] h-full overflow-hidden;
+  }
+  .movie-details-header {
+    @apply w-full relative;
+  }
+  .movie-details-header-between {
+    @apply w-full flex items-center justify-between px-4 absolute top-4 z-30;
+  }
+  .movie-details-back {
+    @apply flex items-center gap-1 text-xs font-bold opacity-75 hover:translate-x-1 duration-300;
+  }
+  .movie-details-gallery {
+    @apply flex items-center gap-1 text-xs font-bold opacity-75 hover:-translate-x-1 duration-300;
+  }
+  .movie-details-backdrop-image {
+    @apply w-full brightness-[15%] h-[600px] object-cover;
+  }
+  .movie-details-poster-image {
+    @apply w-[300px] absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 rounded-md drop-shadow-2xl brightness-75;
+  }
+  .movie-details-body {
+    @apply flex flex-col px-4 gap-5 text-center w-full md:w-[612px] lg:w-[812px] mx-auto py-11;
+  }
+  .movie-details-title {
+    @apply text-5xl font-bold leading-[60px];
+  }
+  .movie-details-overview {
+    @apply text-lg font-normal leading-6;
+  }
+  .movie-details-info {
+    @apply flex md:flex-row flex-col items-center p-[30px] bg-[#0D0D0D] justify-evenly md:gap-5 gap-9 drop-shadow-2xl shadow-2xl;
+  }
+  .movie-details-info-item {
+    @apply flex flex-col gap-3 justify-center;
+  }
+  .movie-details-footer {
+    @apply py-10 lg:px-[105px] md:px-12 px-4 mx-auto w-full flex flex-col gap-10;
+  }
+
+  .mySwiper {
+    @apply w-[1440px] h-auto bg-transparent;
+  }
+  .swiper-slide {
+    @apply hover:scale-105 duration-300 hover:text-white;
+  }
+  .card-recomendations {
+    @apply rounded-lg overflow-hidden relative;
+  }
+  .cr-img {
+    @apply brightness-50 rounded-lg;
+  }
+  .cr-title {
+    @apply text-sm font-bold absolute bottom-4 left-4;
+  }
+
+  .mySwiperDiscover {
+    @apply w-full lg:h-[650px] md:h-[500px] h-[400px] transition-all duration-300 ease-in-out;
+  }
+  .swiper-discover-slide {
+    @apply relative;
+  }
+  .discover-img {
+    @apply object-cover w-full h-full brightness-[25%];
+  }
+  .discover-info {
+    @apply absolute lg:bottom-[100px] md:bottom-[100px] bottom-10 lg:left-[105px] md:left-[48px] left-1/2 -translate-x-1/2 md:-translate-x-0 lg:-translate-x-0 flex flex-col lg:w-[825px] md:w-[500px] w-[300px];
+  }
+  .discover-date {
+    @apply text-xs font-normal mb-[11px];
+  }
+  .discover-title {
+    @apply text-[40px] font-bold leading-[50px] mb-[11px];
+  }
+  .discover-rating {
+    @apply text-sm gap-2 font-bold flex items-center py-[8px] px-[15px] bg-black rounded-full max-w-max;
+  }
+  .discover-overview {
+    @apply text-base font-normal truncate;
+  }
+  .discover-btn {
+    @apply text-sm font-bold bg-black px-4 py-2 rounded-full flex items-center gap-2 hover:scale-105 duration-300;
+  }
+
+  .gallery {
+    @apply w-full;
+  }
+  .gallery-header {
+    @apply w-full md:h-[300px] relative overflow-hidden;
+  }
+  .gallery-backrop-movie {
+    @apply w-full h-full md:h-auto lg:h-auto bg-cover blur-sm absolute brightness-[20%] top-0 -z-10;
+  }
+  .gallery-poster-movie {
+    @apply w-[150px] h-auto rounded-lg;
+  }
+  .gallery-flex-movie {
+    @apply flex flex-row items-center py-[35px] lg:px-[105px] md:px-12 px-4 gap-5 w-full mx-auto;
+  }
+  .gallery-body {
+    @apply py-10 lg:px-[105px] md:px-12 px-4 mx-auto w-full flex flex-col gap-14;
+  }
+  .gallery-item {
+    @apply flex flex-col gap-3;
+  }
+  .gallery-title {
+    @apply lg:text-3xl md:text-2xl text-xl font-bold;
+  }
+  .gallery-grid {
+    @apply grid grid-cols-12 gap-4;
+  }
+  .gallery-img {
+    @apply col-span-2 rounded-lg object-cover w-full;
+  }
+}
