@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import 'react-loading-skeleton/dist/skeleton.css';
-import Skeleton from '@mui/material/Skeleton';
-import RekomendationsList from '../components/RecomendationsList';
-import SimilarList from '../components/SimilarList';
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "@mui/material/Skeleton";
+import RekomendationsList from "../components/RecomendationsList";
+import SimilarList from "../components/SimilarList";
+import SkeletonDiscover from "../components/SkeletonDiscover";
+import SkeletonDiscoverPoster from "../components/SkeletonDiscoverPoster";
 const movie = () => {
   const param = useParams();
 
@@ -61,9 +63,11 @@ const movie = () => {
   };
 
   useEffect(() => {
-    getMovie();
-    getRecommendation();
-    getSimilar();
+    setTimeout(() => {
+      getMovie();
+      getRecommendation();
+      getSimilar();
+    }, 2 * 1000);
   }, []);
 
   return (
@@ -97,39 +101,25 @@ const movie = () => {
             </Link>
           </div>
 
-          <img
-            src={
-              isLoading ? (
-                `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`
-              ) : (
-                <Skeleton
-                  sx={{ bgcolor: 'grey.500' }}
-                  variant="rectangular"
-                  width="100%"
-                  animation="wave"
-                />
-              )
-            }
-            alt="banner"
-            className="movie-details-backdrop-image"
-          />
-          <img
-            src={
-              isLoading ? (
-                `https://image.tmdb.org/t/p/original/${movie.poster_path}`
-              ) : (
-                <Skeleton
-                  sx={{ bgcolor: 'grey.500' }}
-                  variant="rectangular"
-                  width={210}
-                  height={118}
-                  animation="wave"
-                />
-              )
-            }
-            alt="banner"
-            className="movie-details-poster-image"
-          />
+          {isLoading ? (
+            <img
+              src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+              alt="banner"
+              className="movie-details-backdrop-image"
+            />
+          ) : (
+            <SkeletonDiscover />
+          )}
+
+          {isLoading ? (
+            <img
+              src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+              alt="banner"
+              className="movie-details-poster-image"
+            />
+          ) : (
+            <SkeletonDiscoverPoster />
+          )}
         </div>
         <div className="movie-details-body">
           <h2 className="movie-details-title">
@@ -137,7 +127,7 @@ const movie = () => {
               movie.title
             ) : (
               <Skeleton
-                sx={{ bgcolor: 'grey.900' }}
+                sx={{ bgcolor: "grey.900" }}
                 animation="wave"
                 height={50}
                 width="100%"
@@ -149,7 +139,7 @@ const movie = () => {
               movie.overview
             ) : (
               <Skeleton
-                sx={{ bgcolor: 'grey.900' }}
+                sx={{ bgcolor: "grey.900" }}
                 animation="wave"
                 variant="rounded"
                 width="100%"
@@ -166,7 +156,7 @@ const movie = () => {
                   <Skeleton
                     width="100%"
                     animation="wave"
-                    sx={{ bgcolor: 'grey.900' }}
+                    sx={{ bgcolor: "grey.900" }}
                   />
                 )}
               </h2>
@@ -180,7 +170,7 @@ const movie = () => {
                   <Skeleton
                     width="100%"
                     animation="wave"
-                    sx={{ bgcolor: 'grey.900' }}
+                    sx={{ bgcolor: "grey.900" }}
                   />
                 )}
               </h2>
@@ -188,14 +178,14 @@ const movie = () => {
             <div className="movie-details-info-item">
               <h2 className="text-base font-bold">Budget</h2>
               <h2>
-                ${' '}
+                ${" "}
                 {isLoading ? (
                   movie.budget
                 ) : (
                   <Skeleton
                     width="100%"
                     animation="wave"
-                    sx={{ bgcolor: 'grey.900' }}
+                    sx={{ bgcolor: "grey.900" }}
                   />
                 )}
               </h2>
@@ -203,8 +193,11 @@ const movie = () => {
           </div>
         </div>
         <div className="movie-details-footer">
-          <SimilarList similar={similar} />
-          <RekomendationsList recommendations={recommendations} />
+          <SimilarList similar={similar} isLoading={isLoading} />
+          <RekomendationsList
+            recommendations={recommendations}
+            isLoading={isLoading}
+          />
         </div>
       </div>
     </>

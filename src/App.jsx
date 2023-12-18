@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import axios from 'axios';
-import PopularList from './components/PopularList';
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import PopularList from "./components/PopularList";
 import {
   getDiscover,
   getMoviePopularList,
   getNowPlayingList,
   getTopRatedList,
   getUpcomingList,
-} from './services/apitmdb.service';
-import Discover from './components/Discover';
-import SearchResults from './components/SearchResults';
-import NowPlayingList from './components/NowPlayingList';
-import TopRatedList from './components/TopRatedList';
-import UpcomingList from './components/UpcomingList';
+} from "./services/apitmdb.service";
+import Discover from "./components/Discover";
+import SearchResults from "./components/SearchResults";
+import NowPlayingList from "./components/NowPlayingList";
+import TopRatedList from "./components/TopRatedList";
+import UpcomingList from "./components/UpcomingList";
 
 function App() {
   const [popularList, setPopularList] = useState([]);
@@ -26,7 +26,7 @@ function App() {
 
   const [searchResults, setSearchResults] = useState([]);
 
-  const [textResults, setTextResults] = useState('');
+  const [textResults, setTextResults] = useState("");
 
   const [discoverList, setDiscoverList] = useState([]);
 
@@ -40,10 +40,10 @@ function App() {
       setScrollTop(window.scrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.addEventListener('scroll', handleScroll);
+      window.addEventListener("scroll", handleScroll);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -69,32 +69,36 @@ function App() {
   };
 
   useEffect(() => {
-    getMoviePopularList((data) => {
-      setPopularList(data);
-      setIsLoading(true);
-    });
-    getDiscover((data) => {
-      setDiscoverList(data);
-    });
-    getNowPlayingList((data) => {
-      setNowPlayingList(data);
-      setIsLoading(true);
-    });
-    getTopRatedList((data) => {
-      setTopRatedList(data);
-      setIsLoading(true);
-    });
-    getUpcomingList((data) => {
-      setUpcomingList(data);
-      setIsLoading(true);
-    });
+    setTimeout(() => {
+      getMoviePopularList((data) => {
+        setPopularList(data);
+        setIsLoading(true);
+      });
+      getDiscover((data) => {
+        setDiscoverList(data);
+      });
+      getNowPlayingList((data) => {
+        setNowPlayingList(data);
+        setIsLoading(true);
+      });
+      getTopRatedList((data) => {
+        setTopRatedList(data);
+        setIsLoading(true);
+      });
+      getUpcomingList((data) => {
+        setUpcomingList(data);
+        setIsLoading(true);
+      });
+    }, 2 * 1000);
   }, []);
+
+  console.log(isLoading);
 
   return (
     <>
       <div
         className={`movies-header ${
-          scrollTop > 0 ? 'bg-[#0D0D0D] bg-opacity-80' : ''
+          scrollTop > 0 ? "bg-[#0D0D0D] bg-opacity-80" : ""
         }`}
       >
         <a href="/" className="movies-header-logo">
@@ -117,7 +121,7 @@ function App() {
           onChange={({ target }) => search(target.value)}
         />
       </div>
-      <Discover values={discoverList} />
+      <Discover values={discoverList} isLoading={isLoading} />
       <SearchResults
         values={searchResults}
         isLoading={isLoading}

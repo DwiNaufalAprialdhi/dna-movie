@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Button, Icon, Image, Modal } from 'semantic-ui-react';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Modal } from "semantic-ui-react";
+import SkeletonCard from "../components/SkeletonCard";
+import SkeletonDiscoverGallery from "../components/SkeletonDiscoverGallery";
 const gallery = () => {
   const param = useParams();
 
@@ -15,6 +17,7 @@ const gallery = () => {
   const [openBackdrops, setOpenBackdrops] = useState(false);
   const [openPosters, setOpenPosters] = useState(false);
   const [openLogos, setOpenLogos] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getImages = () => {
     axios
@@ -25,6 +28,7 @@ const gallery = () => {
         setBackdrops(res.data.backdrops);
         setLogos(res.data.logos);
         setPosters(res.data.posters);
+        setIsLoading(true);
       })
       .catch((err) => {
         console.log(err);
@@ -38,6 +42,7 @@ const gallery = () => {
       )
       .then((res) => {
         setMovie(res.data);
+        setIsLoading(true);
       })
       .catch((err) => {
         console.log(err);
@@ -45,19 +50,26 @@ const gallery = () => {
   };
 
   useEffect(() => {
-    getImages();
-    getMovie();
+    setTimeout(() => {
+      getImages();
+      getMovie();
+    }, 2 * 3000);
   }, []);
 
   return (
     <>
       <div className="gallery">
         <div className="gallery-header">
-          <img
-            src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
-            alt="movie"
-            className="gallery-backrop-movie"
-          />
+          {isLoading ? (
+            <img
+              src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+              alt="movie"
+              className="gallery-backrop-movie"
+            />
+          ) : (
+            <SkeletonDiscoverGallery />
+          )}
+
           <div className="gallery-flex-movie">
             <img
               src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
@@ -87,7 +99,7 @@ const gallery = () => {
                   backdrops.length > 6 ? (
                     <button className="text-base font-bold">See All</button>
                   ) : (
-                    ''
+                    ""
                   )
                 }
               >
@@ -108,27 +120,31 @@ const gallery = () => {
                 </Modal.Content>
               </Modal>
             </div>
-            <div className="gallery-grid">
-              {backdrops.length > 6
-                ? backdrops
-                    .slice(0, 6)
-                    .map((backdrop) => (
+            {isLoading ? (
+              <div className="gallery-grid">
+                {backdrops.length > 6
+                  ? backdrops
+                      .slice(0, 6)
+                      .map((backdrop) => (
+                        <img
+                          key={backdrop.file_path}
+                          src={`https://image.tmdb.org/t/p/original/${backdrop.file_path}`}
+                          alt="movie"
+                          className="gallery-img"
+                        />
+                      ))
+                  : backdrops.map((backdrop) => (
                       <img
                         key={backdrop.file_path}
                         src={`https://image.tmdb.org/t/p/original/${backdrop.file_path}`}
                         alt="movie"
                         className="gallery-img"
                       />
-                    ))
-                : backdrops.map((backdrop) => (
-                    <img
-                      key={backdrop.file_path}
-                      src={`https://image.tmdb.org/t/p/original/${backdrop.file_path}`}
-                      alt="movie"
-                      className="gallery-img"
-                    />
-                  ))}
-            </div>
+                    ))}
+              </div>
+            ) : (
+              <SkeletonCard />
+            )}
           </div>
           <div className="gallery-item">
             <div className="flex items-center justify-between">
@@ -141,7 +157,7 @@ const gallery = () => {
                   posters.length > 6 ? (
                     <button className="text-base font-bold">See All</button>
                   ) : (
-                    ''
+                    ""
                   )
                 }
               >
@@ -162,27 +178,31 @@ const gallery = () => {
                 </Modal.Content>
               </Modal>
             </div>
-            <div className="gallery-grid">
-              {posters.length > 6
-                ? posters
-                    .slice(0, 6)
-                    .map((poster) => (
+            {isLoading ? (
+              <div className="gallery-grid">
+                {posters.length > 6
+                  ? posters
+                      .slice(0, 6)
+                      .map((poster) => (
+                        <img
+                          key={poster.file_path}
+                          src={`https://image.tmdb.org/t/p/original/${poster.file_path}`}
+                          alt="movie"
+                          className="gallery-img"
+                        />
+                      ))
+                  : posters.map((poster) => (
                       <img
                         key={poster.file_path}
                         src={`https://image.tmdb.org/t/p/original/${poster.file_path}`}
                         alt="movie"
                         className="gallery-img"
                       />
-                    ))
-                : posters.map((poster) => (
-                    <img
-                      key={poster.file_path}
-                      src={`https://image.tmdb.org/t/p/original/${poster.file_path}`}
-                      alt="movie"
-                      className="gallery-img"
-                    />
-                  ))}
-            </div>
+                    ))}
+              </div>
+            ) : (
+              <SkeletonCard />
+            )}
           </div>
           <div className="gallery-item">
             <div className="flex items-center justify-between">
@@ -195,7 +215,7 @@ const gallery = () => {
                   logos.length > 6 ? (
                     <button className="text-base font-bold">See All</button>
                   ) : (
-                    ''
+                    ""
                   )
                 }
               >
@@ -216,27 +236,31 @@ const gallery = () => {
                 </Modal.Content>
               </Modal>
             </div>
-            <div className="gallery-grid">
-              {logos.length > 6
-                ? logos
-                    .slice(0, 6)
-                    .map((logo) => (
+            {isLoading ? (
+              <div className="gallery-grid">
+                {logos.length > 6
+                  ? logos
+                      .slice(0, 6)
+                      .map((logo) => (
+                        <img
+                          key={logo.file_path}
+                          src={`https://image.tmdb.org/t/p/original/${logo.file_path}`}
+                          alt="movie"
+                          className="gallery-img"
+                        />
+                      ))
+                  : logos.map((logo) => (
                       <img
                         key={logo.file_path}
                         src={`https://image.tmdb.org/t/p/original/${logo.file_path}`}
                         alt="movie"
                         className="gallery-img"
                       />
-                    ))
-                : logos.map((logo) => (
-                    <img
-                      key={logo.file_path}
-                      src={`https://image.tmdb.org/t/p/original/${logo.file_path}`}
-                      alt="movie"
-                      className="gallery-img"
-                    />
-                  ))}
-            </div>
+                    ))}
+              </div>
+            ) : (
+              <SkeletonCard />
+            )}
           </div>
         </div>
       </div>
